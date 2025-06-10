@@ -16,8 +16,8 @@ import {
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { mockOcrApi } from '../utils/api';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import { mockOcrApi } from '../utils/api';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 
@@ -163,16 +163,16 @@ const UploadPage = () => {
     try {
       // Use fetch API to send the file to your FastAPI backend's /upload-image endpoint
       const token = localStorage.getItem('access_token'); // Assuming token is stored in localStorage
-      if (!token) {
-        setError('Authentication token not found. Please log in.');
-        setLoading(false);
-        return;
-      }
+      // if (!token) {
+      //   setError('Authentication token not found. Please log in.');
+      //   setLoading(false);
+      //   return;
+      // }
 
-      const response = await fetch('http://localhost:8000/user/upload-image', { // Corrected endpoint path
+      const response = await fetch('http://localhost:8000/upload-image/', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          // 'Authorization': `Bearer ${token}`,
           // 'Content-Type': 'multipart/form-data', // Fetch API sets this automatically with FormData
         },
         body: formData,
@@ -183,13 +183,13 @@ const UploadPage = () => {
         throw new Error(errorData.detail || 'File upload failed');
       }
 
+      // Handle the JSON response
       const result = await response.json();
       console.log('Upload successful:', result);
 
-      // Instead of mockOcrApi, now we rely on the backend response
-      // For now, let's assume the backend will return something useful, or we navigate directly.
-      // If backend returns OCR metadata, you can store it here:
-      // sessionStorage.setItem('ups_metadata', JSON.stringify(result.metadata)); 
+      // Store the extracted data in sessionStorage
+      sessionStorage.setItem('extractedData', JSON.stringify(result));
+
       setSuccessMessage('File uploaded and processed successfully!');
       setTimeout(() => {
         navigate('/dashboard'); // Navigate to dashboard after successful upload

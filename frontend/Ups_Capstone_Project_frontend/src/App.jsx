@@ -84,9 +84,9 @@ function App() {
         <CssBaseline />
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {shouldShowAppBar && (
-            <AppBar position="static" elevation={0} sx={{ bgcolor: 'primary.main' }}>
-              <Container maxWidth="lg">
-                <Toolbar sx={{ px: { xs: 0 } }}>
+          <AppBar position="static" elevation={0} sx={{ bgcolor: 'primary.main' }}>
+            <Container maxWidth="lg">
+              <Toolbar sx={{ px: { xs: 0 } }}>
                   {isAuthenticated && (
                     <IconButton
                       color="inherit"
@@ -98,34 +98,34 @@ function App() {
                       <MenuIcon />
                     </IconButton>
                   )}
-                  <Typography 
-                    variant="h5" 
-                    sx={{ 
-                      flexGrow: 1, 
-                      fontWeight: 'bold',
-                      cursor: 'pointer'
-                    }}
+                <Typography 
+                  variant="h5" 
+                  sx={{ 
+                    flexGrow: 1, 
+                    fontWeight: 'bold',
+                    cursor: 'pointer'
+                  }}
                     onClick={() => navigate(isAuthenticated ? '/home' : '/login')} // Changed to /home after login
-                  >
-                    Package Label
-                  </Typography>
-                  {isAuthenticated && (
-                    <Stack direction="row" spacing={2} sx={{ mr: 2 }}>
+                >
+                  Package Label
+                </Typography>
+                {isAuthenticated && (
+                  <Stack direction="row" spacing={2} sx={{ mr: 2 }}>
                       {/* These items are now in the drawer */}
-                    </Stack>
-                  )}
-                  {isAuthenticated && (
+                  </Stack>
+                )}
+                {isAuthenticated && (
                     <IconButton
-                      color="inherit"
+                    color="inherit" 
                       onClick={() => navigate('/profile')}
                       sx={{ ml: 2 }} // Margin left for spacing from logout button if it exists
                     >
                       <AccountCircle />
                     </IconButton>
-                  )}
-                </Toolbar>
-              </Container>
-            </AppBar>
+                )}
+              </Toolbar>
+            </Container>
+          </AppBar>
           )}
           <Drawer
             anchor="left"

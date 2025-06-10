@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.routers import auth
 from backend.routers import user
+from backend.routers import image_processing
 
 app = FastAPI(debug=True)
 
@@ -25,6 +26,7 @@ app.add_middleware(
 
 app.include_router(user.router)
 app.include_router(auth.router, prefix="/auth")
+app.include_router(image_processing.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000) 

@@ -5,28 +5,28 @@ import { saveAs } from 'file-saver';
 import { toCsv } from '../utils/csv';
 
 const DashboardPage = () => {
-  const [metadata, setMetadata] = useState(null);
+  const [extractedData, setExtractedData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const data = sessionStorage.getItem('ups_metadata');
+    const data = sessionStorage.getItem('extractedData');
     if (data) {
-      setMetadata(JSON.parse(data));
+      setExtractedData(JSON.parse(data));
     }
   }, []);
 
   const handleDownload = () => {
-    if (!metadata) return;
-    const csv = toCsv([metadata]);
+    if (!extractedData) return;
+    const csv = toCsv([extractedData]);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-    saveAs(blob, 'ups_label_metadata.csv');
+    saveAs(blob, 'extracted_data.csv');
   };
 
-  if (!metadata) {
+  if (!extractedData) {
     return (
       <Container maxWidth="sm">
         <Paper elevation={3} sx={{ mt: 8, p: 4, textAlign: 'center' }}>
-          <Typography variant="h6">No metadata found. Please upload a label first.</Typography>
+          <Typography variant="h6">No extracted data found. Please upload a label first.</Typography>
           <Button sx={{ mt: 2 }} variant="contained" onClick={() => navigate('/upload')}>Go to Upload</Button>
         </Paper>
       </Container>
@@ -37,7 +37,7 @@ const DashboardPage = () => {
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ mt: 8, p: 4 }}>
         <Typography variant="h5" gutterBottom>
-          Extracted Label Metadata
+          Extracted Label Details
         </Typography>
         <TableContainer>
           <Table>
@@ -48,7 +48,7 @@ const DashboardPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.entries(metadata).map(([key, value]) => (
+              {Object.entries(extractedData).map(([key, value]) => (
                 <TableRow key={key}>
                   <TableCell>{key}</TableCell>
                   <TableCell>{value}</TableCell>
